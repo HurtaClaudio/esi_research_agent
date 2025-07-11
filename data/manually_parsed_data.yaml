@@ -1,0 +1,421 @@
+h1:
+  - id: 1
+    title: "Introducción"
+    content: "1 Introducción
+La Encuesta Suplementaria de Ingresos (ESI), realizada por el Instituto Nacional de Estadísticas (INE),
+es un módulo complementario aplicado al interior de la Encuesta Nacional de Empleo (ENE). Se
+recolecta cada año en el trimestre móvil octubre, noviembre y diciembre (en adelante 'trimestre
+OND' u 'OND'), con el objetivo de caracterizar los ingresos laborales de las personas que son
+clasificadas como ocupadas en la ENE, así como los ingresos provenientes de otras ocupaciones,
+distintas de la principal.
+La ESI, al ser un módulo complementario de la ENE, comparte sus mismos dominios de estudio o
+niveles de estimación, en los que el diseño muestral de la ENE garantiza estimaciones
+representativas a nivel nacional, nacional urbano, nacional rural, regional, en el área urbana de las
+16 regiones y en el área rural de las regiones de Coquimbo, Valparaíso, O’Higgins, Maule, Biobío, La
+Araucanía, Los Lagos, Metropolitana, Los Ríos y Ñuble1.
+El presente documento tiene como propósito describir los procesos y metodologías utilizadas en la
+producción de la ESI, apuntando a lograr que las personas que acceden a esta tengan un
+conocimiento global de los productos estadísticos que se desprenden, desde su diseño hasta la
+entrega de resultados finales, aumentando el entendimiento de la encuesta y sacando el máximo
+provecho de la información proporcionada.
+El documento se encuentra organizado en capítulos, luego de la presente introducción, el segundo
+de ellos se refiere al contexto metodológico de la encuesta, abarcando antecedentes, objetivos y
+necesidad de información. El tercer capítulo aborda el marco de referencia y el contexto
+metodológico en el que se enmarca el desarrollo de la ESI. El cuarto capítulo desarrolla el diseño
+estadístico de la encuesta. El capítulo cinco se refiere a la metodología de recolección de datos. El
+sexto capítulo describe la metodología para el procesamiento de la información. El séptimo capítulo
+desarrolla la metodología de análisis. Finalmente, el octavo capítulo expone el alcance de la
+presentación de resultados."
+  - id: 4
+    title: "Diseño estadístico"
+    content: "4.1 Universo
+Anualmente, la ESI produce información de ingresos de personas con residencia habitual en
+viviendas particulares ocupadas, presentes en el territorio nacional y que son cubiertas por el marco
+de muestreo definido para la encuesta en base al Censo de Población y Vivienda 2017 (MMV 2017),
+con actualización al año 2020.
+4.2 Población objetivo
+La población objetivo es la población en edad de trabajar, es decir, todas las personas de quince
+años o más, que residen habitualmente en viviendas particulares ocupadas en el país.
+4.3 Marco estadístico
+Un marco muestral se define como la lista o los procedimientos que permiten identificar a todos los
+elementos de una población objetivo (Groves, 2004, pág. 68). Los marcos constituyen el insumo
+fundamental para el diseño de encuestas por muestreo y, por consiguiente, resulta de suma
+importancia que su metodología de conformación sea debidamente documentada.
+Particularmente la ESI, al ser un módulo de la ENE, comparte la totalidad de su marco muestral. El
+detalle de este diseño se encuentra en el Documento Metodológico oficial de la ENE20
+4.4 Cobertura geográfica
+Al igual que en la ENE, la cobertura geográfica de la ESI considera las 16 regiones del país, buscando
+presencia en todo el territorio nacional y abarcando 97% de las comunas del país. No obstante, se
+excluyen algunas áreas geográficas que, por presentar ciertas características especiales (insularidad,
+clima, altitud, tiempo de traslados, estado de los caminos, etc.), son excluidas del marco de
+muestreo de la ENE y, por tanto, de la ESI.
+4.5 Unidades estadísticas
+Al ser la ESI un módulo de la ENE y, en consecuencia, una encuesta por muestreo, las unidades
+estadísticas las conforman unidades de muestreo, unidades de información y unidades de análisis.
+Las unidades de muestreo son aquellas que son susceptibles de ser seleccionadas en las etapas de
+muestreo definidas en el diseño, pudiendo estar conformadas por una unidad elemental o por un
+conjunto de ellas (conglomerado). Por otra parte, las unidades de información son aquellas desde
+donde se obtiene la información de interés, pudiendo esta coincidir con la unidad de análisis que,
+es aquella unidad sobre la cual se puede realizar la medición del fenómeno objeto de estudio.
+4.5.1 Unidad de muestreo
+Dado el diseño bietápico existen dos unidades de muestreo para la ENE y, por tanto, para la ESI.
+a) Unidad primaria de muestreo (UPM): definida como un conglomerado homogéneo, en
+términos de la cantidad de viviendas particulares que los componen.
+b) Unidad secundaria de muestreo (USM): que corresponde a viviendas particulares ocupadas
+dentro de las UPM seleccionadas.
+El tamaño promedio de las UPM en el área urbana es de 200 viviendas particulares, con un rango
+de 160 a 240 viviendas particulares, excluyendo viviendas de temporada. Mientras que, el tamaño
+promedio de las UPM rurales es de 90 viviendas particulares, con un rango de 70 a 110 viviendas
+particulares, excluyendo las de temporada.
+4.5.2 Unidad de información y análisis
+Para el cumplimiento del objetivo de la encuesta, se utiliza como unidades de información y análisis
+a las personas que cumplen con el requisito de ser parte de la población objetivo, esto es, que
+tengan quince años o más y tengan residencia habitual en hogares ubicados en viviendas
+particulares ocupadas dentro del territorio nacional. Sin embargo, se registran las características
+sociodemográficas de todas las personas residentes en la vivienda seleccionada mediante el
+cuestionario construido para estos fines.
+4.6 D7finición de variables
+4.6.1 Variables analíticas
+Una variable analítica es aquella que se genera en función de otras variables y que se incluye en el
+análisis estadístico. Las variables analíticas de la ESI corresponden a ingresos de origen laboral o de
+la ocupación. Específicamente, estos son:
+a) Variable ing_t_d, Total ingresos sueldos y salarios. Corresponde a la suma del total de
+ingresos provenientes de sueldos y salarios de las personas trabajadoras dependientes en
+su ocupación principal.
+Página 28 de 96
+b) Variable ing_t_i, Total ingresos trabajo independiente. Corresponde a la suma del total de
+ingresos proveniente del trabajo independiente.
+c) Variable ing_t_p, Ingresos del Trabajo Principal. Corresponde a la suma del total de ingresos
+provenientes de sueldos y salarios, en el caso de las personas ocupadas dependientes, y el
+total de ingresos del trabajo independiente. Es la variable principal de análisis de la ESI.
+d) Variable ing_ot, Ingresos de Otros Trabajos. Corresponde a los ingresos provenientes de
+otra(s) ocupaciones distintas de la principal.
+e) Variable ing_t_t, Ingresos Totales del Trabajo. Corresponde a la suma de los ingresos
+provenientes de la ocupación principal y de los ingresos provenientes de otros trabajos.
+f) Variable ocup_ref, es la variable de filtro que permite distinguir personas ocupadas con al
+menos 1 mes en la ocupación principal por la cual reportan ingresos en la ESI.
+g) Variable fact_cal_esi, es el Factor de expansión de la ESI, que permite expandir datos
+muestrales a poblacionales.
+Respecto de los ingresos de la ocupación, es importante tomar en cuenta que la población ocupada
+se refiere a stocks demográficos del mes anterior a la semana de referencia de la ENE. En
+consecuencia, la población ocupada de acuerdo con la ESI hace referencia al conjunto de personas
+para las que su empleo actual es el mismo que tenían en el mes de referencia y, por lo tanto, todos
+los perfiles que caracterizan al empleo se extienden al análisis de los ingresos laborales de este
+grupo de personas.
+Adicionalmente, la encuesta permite identificar a la población que tuvo el mes pasado un segundo
+empleo, o bien otro empleo distinto al que tenía en la semana de referencia de la encuesta
+(incluyendo a quienes no necesariamente hayan estado empleados en dicha semana, pero que sí
+trabajaron el mes previo), y que reportan información de ingresos laborales. Para este grupo de
+personas no es posible extender los perfiles de ocupación que se pudieran haber informado en el
+cuestionario central de la ENE21, ya que el único empleo que se caracteriza en la encuesta de empleo
+es el trabajo principal realizado en la semana de referencia.
+En síntesis, la información de ingresos de la ocupación de personas trabajadoras –dependientes e
+independientes– se refiere exclusivamente a aquellos cuyo empleo actual es el mismo que tenían
+en el mes de referencia.
+Por otro lado, se destaca que la ESI mide los ingresos de las personas ocupadas independientes de
+acuerdo con dos categorías ocupacionales:
+ 'Empleadores', que corresponde a aquellas personas que son propietarias de alguna
+empresa o negocio y que contratan a una o varias personas como asalariados a lo largo de
+un periodo continuo, que incluye el periodo de referencia (no se considera para este caso
+los familiares no remunerados).
+'Trabajadores por cuenta propia', que corresponde a aquellas personas que trabajan por
+su cuenta, constituyendo el segundo grupo más numeroso dentro de la población ocupada
+y, a diferencia de los empleadores, no contratan de manera continua a otras personas
+asalariadas para que trabajen con ellos.
+Para el caso de las personas ocupadas independientes, sean o no empleadoras, se busca separar los
+ingresos brutos de los gastos totales de manera que se obtenga, al igual que en el caso de las
+personas asalariadas, el ingreso neto percibido por la actividad realizada. Debido a que para las
+personas ocupadas independientes se mezclan los ingresos provenientes del capital y del trabajo,
+lo que se reporta en la encuesta es una combinación de utilidades y sueldos22, lo que se denomina
+en la literatura como ingreso 'mixto'23.
+4.6.2 Variables de información muestral.
+Además de las variables analíticas antes descritas, existe un set de variables de información muestral
+que se incluyen en las bases de datos. Estas variables son compartidas con la ENE, y corresponden
+a los datos que permiten identificar las características geográficas y del marco muestral utilizado en
+la encuesta.
+4.6.3 Variables de identificación de la persona
+Dentro de las variables requeridas para la identificación individual de miembros de un hogar, se
+construyen dos variables para poder identificar a las personas entrevistadas, estas son:
+ nro_linea: Corresponde al número de la línea con el cual la persona fue identificada en el
+cuestionario, o al orden correlativo que la persona toma dentro de la composición de un
+hogar.
+ idrph: Identificador único de personas. Esta variable permite identificar a las personas
+encuestadas de forma longitudinal.
+4.7 Nomenclatura utilizada
+Las nomenclaturas utilizadas en la Encuesta Suplementaria de Ingresos provienen de los principales
+clasificadores utilizados para caracterizar a la población en edad de trabajar y, en la mayoría de los
+casos, a las personas ocupadas.
+4.7.1 Clasificación Internacional Normalizada de la Educación del año 1997 (CINE 97)
+Forma parte de la familia internacional de Clasificaciones Económicas y Sociales de las Naciones
+Unidas, las cuales son empleadas a nivel mundial en la elaboración de estadísticas con el objetivo
+de acopiar y analizar datos comparables a nivel internacional de manera consistente. Dentro de
+estas, la CINE representa una clasificación de referencia que permite ordenar los programas
+educativos y sus respectivas certificaciones por niveles de educación y campos de estudio según la
+Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura (UNESCO).
+Actualmente, a nivel nacional la categoría contempla el siguiente desglose que se aplica a todas las
+personas en edad en trabajar que conforman la población objetivo de la encuesta:
+1. Nunca estudió
+2. Educación preescolar
+3. Educación primaria (nivel 1)
+4. Educación primaria (nivel 2)
+5. Educación secundaria
+6. Educación Técnica (Educación Superior no Universitaria)
+7. Educación universitaria
+8. Post títulos y maestría
+9. Doctorado
+10. Nivel ignorado
+En el caso de la categoría de personas ocupadas, existen varios clasificadores que contribuyen a
+caracterizar a las personas ocupadas, de acuerdo con sus actividades realizadas, a la empresa o lugar
+donde trabajan, entre otras dimensiones.
+4.7.2 Clasificación Internacional Uniforme de Ocupaciones del año 2008, adaptación
+nacional (CIUO 08.CL)
+El Clasificador Chileno de Ocupaciones, CIUO 08.CL, corresponde a la adaptación nacional de la
+Clasificación Internacional Uniforme de Ocupaciones, CIUO 08. El Clasificador Chileno de
+Ocupaciones, CIUO 08.CL es el estándar oficial para el procesamiento y análisis de las ocupaciones,
+que permite organizarlas de acuerdo con el tipo de tareas realizadas en una ocupación y las
+competencias requeridas para ello, dependiendo del nivel y la especialización de estas
+competencias.
+1. Directores, gerentes y administradores
+2. Profesionales, científicos e intelectuales
+3. Técnicos y profesionales de nivel medio
+4. Personal de apoyo administrativo
+5. Trabajadores de los servicios y vendedores de comercios y mercados
+6. Agricultores y trabajadores calificados agropecuarios, forestales y pesqueros
+7. Artesanos y operarios de oficios
+8. Operadores de instalaciones, máquinas y ensambladores
+9. Ocupaciones elementales
+10. No identificado
+4.7.3 Clasificación Internacional Industrial Uniforme revisión 4.CL según la Clasificación
+de Actividades Económicas Nacional de Encuestas Sociodemográficas (CAENES)
+El CAENES es una clasificación basada en el Clasificador Chileno de Actividades Económicas CIIU4.CL
+2012. Por este motivo, se rige por los mismos conceptos y criterios del Clasificador Internacional
+CIIU Rev.4. En términos operativo corresponde al clasificador de la rama de actividad económica de
+la empresa o institución donde la persona ocupada trabajar o de la que es dueña. Posee 21 ramas
+de actividad.
+A. Agricultura, ganadería, silvicultura y pesca
+B. Explotación de minas y canteras
+C. Industrias Manufactureras
+D. Suministro de electricidad, gas, vapor y aire acondicionado
+E. Suministro de agua; evacuación de aguas residuales, gestión de desechos y
+descontaminación
+F. Construcción
+G. Comercio al por mayor y al por menor; reparación de vehículos automotores y
+motocicletas
+H. Transporte y almacenamiento
+I. Actividades de alojamiento y servicio de comidas
+J. Información y comunicaciones
+K. Actividades financieras y de seguros
+L. Actividades inmobiliarias
+M. Actividades profesionales, científicas y técnicas
+N. Actividades de servicios administrativos y de apoyo
+Página 32 de 96
+O. Administración pública y defensa; planes de seguridad social de afiliación
+obligatoria
+P. Enseñanza
+Q. Actividades de atención de la salud humana y de asistencia social
+R. Actividades artísticas, de entretenimiento y recreativas
+S. Otras actividades de servicios
+T. Actividades de los hogares como empleadores; actividades no diferenciadas de los
+hogares como productores de bienes y servicios para uso propio
+U. Actividades de organizaciones y órganos extraterritoriales.
+4.7.4 Clasificación Internacional de la Situación en el Empleo del año 1993 (CISE 93)
+La CISE-93 clasifica los empleos según el tipo de riesgo económico, solidez del vínculo entre la
+persona y el empleo, y el tipo de autoridad, que tienen o tendrán los titulares sobre los
+establecimientos y sobre otros trabajadores. La actual CISE 93 utilizada en la ENE corresponde a la
+adaptación chilena y posee las siguientes categorías:
+1. Empleador
+2. Cuenta propia
+3. Asalariado sector privado
+4. Asalariado sector público
+5. Personal de servicio doméstico puertas afuera
+6. Personal de servicio doméstico puertas adentro
+7. Familiar o personal no remunerado
+Página 33 de 96
+4.8 Diseño según tipo de fuente: Muestra
+4.8.1 Diseño y selección muestral
+La explicación del diseño y selección muestral se encuentra en www.ine.gob.cl, apartado de
+Estadísticas, sección Mercado laboral, subsección Ocupación y desocupación, 'Documento
+Metodológico Encuesta Nacional de Empleo (ENE) - 202024'.
+Como ya se ha mencionado anteriormente, la ESI comparte todos los atributos del diseño muestral
+de la ENE, por lo tanto, también comparte la determinación del tamaño muestral teórico para los
+meses de octubre, noviembre y diciembre, que corresponden al trimestre de aplicación de la ESI.
+4.8.2 Cálculo del factor de expansión
+Los factores de expansión se definen como la cantidad de unidades en la población representadas
+por un elemento que ha sido seleccionado en la muestra.
+Como el diseño de la ENE y, por ende, el de la ESI, es bietápico, el factor de expansión teórico o de
+selección de unidades se compone de:
+ Ponderador de Unidades Primarias de Muestreo (UPM)
+ Ponderador de Unidades Secundarias de Muestreo (USM)
+El ponderador de UPM depende del número de UPM seleccionadas en cada estrato de muestreo ℎ;
+del número de viviendas totales en el estrato, y, del número de viviendas particulares de cada UPM
+seleccionada, según el marco de selección.
+Por su parte, el ponderador de USM depende del número de viviendas seleccionadas en la UPM y
+del número de viviendas obtenido desde la actualización25 de los directorios de cada UPM
+seleccionada.
+El factor de expansión teórico es el mismo para todas las viviendas seleccionadas en una UPM y para
+todas las personas que conforman dichas viviendas.
+Sin embargo, luego del trabajo de campo, se observan edificaciones que no forman parte de la
+población objetivo, es decir, ya no son viviendas particulares o bien, no se pudo dilucidar su estado
+de ocupación; así como también, edificaciones que corresponden a viviendas particulares, pero que
+no fue posible obtener respuesta, por varios motivos (rechazo, moradores ausentes o ausencia de
+informante idóneo al momento de la entrevista).
+En el primer caso, la edificación queda catalogada como no elegible; en el segundo, como
+elegibilidad desconocida y; en el tercero, como vivienda sin respuesta. Para cada uno de estos casos,
+el factor de expansión incorpora ajustes en forma secuencial. Estos son:
+1. Ajuste por elegibilidad desconocida
+2. Ajuste por no elegibilidad
+3. Ajuste por no respuesta
+Estos ajustes permiten, por un lado, distribuir los pesos originales (o de selección) de unidades en
+que se desconoce su estado de elegibilidad entre las unidades donde sí se conoce (elegibles y no
+elegibles); y, por otro lado, desechar los pesos de las unidades no elegibles ya que, por definición,
+estas unidades no contienen a la población objetivo por lo que, hacer inferencias sobre ellas sería
+incorrecto.
+Finalmente, el último ajuste al factor de selección de viviendas permite asignar los pesos de
+viviendas que no respondieron a viviendas que sí lo hicieron dentro de 'casillas' o 'veintiles de
+respuesta26' donde las probabilidades de responder la encuesta son similares.
+A continuación, se describen cada una de las etapas del factor:
+"
+
+h2:
+  - id: 1
+    parent_id: 4
+    title: "Universo"
+    content: "Anualmente, la ESI produce información de ingresos de personas con residencia habitual en
+viviendas particulares ocupadas, presentes en el territorio nacional y que son cubiertas por el marco
+de muestreo definido para la encuesta en base al Censo de Población y Vivienda 2017 (MMV 2017),
+con actualización al año 2020."
+
+
+  - id: 2
+    parent_id: 4
+    title: "población objetivo"
+    content: "La población objetivo es la población en edad de trabajar, es decir, todas las personas de quince
+años o más, que residen habitualmente en viviendas particulares ocupadas en el país."
+
+  - id: 3
+    parent_id: 4
+    title: "Universo"
+    content: "Un marco muestral se define como la lista o los procedimientos que permiten identificar a todos los
+elementos de una población objetivo (Groves, 2004, pág. 68). Los marcos constituyen el insumo
+fundamental para el diseño de encuestas por muestreo y, por consiguiente, resulta de suma
+importancia que su metodología de conformación sea debidamente documentada.
+Particularmente la ESI, al ser un módulo de la ENE, comparte la totalidad de su marco muestral. El
+detalle de este diseño se encuentra en el Documento Metodológico oficial de la ENE2"
+
+  - id: 4
+    parent_id: 4
+    title: "Cobertura geográfica"
+    content: "Al igual que en la ENE, la cobertura geográfica de la ESI considera las 16 regiones del país, buscando
+presencia en todo el territorio nacional y abarcando 97% de las comunas del país. No obstante, se
+excluyen algunas áreas geográficas que, por presentar ciertas características especiales (insularidad,
+clima, altitud, tiempo de traslados, estado de los caminos, etc.), son excluidas del marco de
+muestreo de la ENE y, por tanto, de la ESI."
+
+  - id: 5
+    parent_id: 4
+    title: "Unidades estadísticas"
+    content: "Al ser la ESI un módulo de la ENE y, en consecuencia, una encuesta por muestreo, las unidades
+estadísticas las conforman unidades de muestreo, unidades de información y unidades de análisis.
+Las unidades de muestreo son aquellas que son susceptibles de ser seleccionadas en las etapas de
+muestreo definidas en el diseño, pudiendo estar conformadas por una unidad elemental o por un
+conjunto de ellas (conglomerado). Por otra parte, las unidades de información son aquellas desde
+donde se obtiene la información de interés, pudiendo esta coincidir con la unidad de análisis que,
+es aquella unidad sobre la cual se puede realizar la medición del fenómeno objeto de estudio.
+4.5.1 Unidad de muestreo
+Dado el diseño bietápico existen dos unidades de muestreo para la ENE y, por tanto, para la ESI.
+a) Unidad primaria de muestreo (UPM): definida como un conglomerado homogéneo, en
+términos de la cantidad de viviendas particulares que los componen.
+b) Unidad secundaria de muestreo (USM): que corresponde a viviendas particulares ocupadas
+dentro de las UPM seleccionadas.
+El tamaño promedio de las UPM en el área urbana es de 200 viviendas particulares, con un rango
+de 160 a 240 viviendas particulares, excluyendo viviendas de temporada. Mientras que, el tamaño
+promedio de las UPM rurales es de 90 viviendas particulares, con un rango de 70 a 110 viviendas
+particulares, excluyendo las de temporada.
+4.5.2 Unidad de información y análisis
+Para el cumplimiento del objetivo de la encuesta, se utiliza como unidades de información y análisis
+a las personas que cumplen con el requisito de ser parte de la población objetivo, esto es, que
+tengan quince años o más y tengan residencia habitual en hogares ubicados en viviendas
+particulares ocupadas dentro del territorio nacional. Sin embargo, se registran las características
+sociodemográficas de todas las personas residentes en la vivienda seleccionada mediante el
+cuestionario construido para estos fines.
+4.6 Definición de variables
+4.6.1 Variables analíticas
+Una variable analítica es aquella que se genera en función de otras variables y que se incluye en el
+análisis estadístico. Las variables analíticas de la ESI corresponden a ingresos de origen laboral o de
+la ocupación. Específicamente, estos son:
+a) Variable ing_t_d, Total ingresos sueldos y salarios. Corresponde a la suma del total de
+ingresos provenientes de sueldos y salarios de las personas trabajadoras dependientes en
+su ocupación principal."
+
+  - id: 6
+    parent_id: 4
+    title: "Definición de variables"
+    content: "4.6.1 Variables analíticas
+Una variable analítica es aquella que se genera en función de otras variables y que se incluye en el
+análisis estadístico. Las variables analíticas de la ESI corresponden a ingresos de origen laboral o de
+la ocupación. Específicamente, estos son:
+a) Variable ing_t_d, Total ingresos sueldos y salarios. Corresponde a la suma del total de
+ingresos provenientes de sueldos y salarios de las personas trabajadoras dependientes en
+su ocupación principal.
+Página 28 de 96
+b) Variable ing_t_i, Total ingresos trabajo independiente. Corresponde a la suma del total de
+ingresos proveniente del trabajo independiente.
+c) Variable ing_t_p, Ingresos del Trabajo Principal. Corresponde a la suma del total de ingresos
+provenientes de sueldos y salarios, en el caso de las personas ocupadas dependientes, y el
+total de ingresos del trabajo independiente. Es la variable principal de análisis de la ESI.
+d) Variable ing_ot, Ingresos de Otros Trabajos. Corresponde a los ingresos provenientes de
+otra(s) ocupaciones distintas de la principal.
+e) Variable ing_t_t, Ingresos Totales del Trabajo. Corresponde a la suma de los ingresos
+provenientes de la ocupación principal y de los ingresos provenientes de otros trabajos.
+f) Variable ocup_ref, es la variable de filtro que permite distinguir personas ocupadas con al
+menos 1 mes en la ocupación principal por la cual reportan ingresos en la ESI.
+g) Variable fact_cal_esi, es el Factor de expansión de la ESI, que permite expandir datos
+muestrales a poblacionales.
+Respecto de los ingresos de la ocupación, es importante tomar en cuenta que la población ocupada
+se refiere a stocks demográficos del mes anterior a la semana de referencia de la ENE. En
+consecuencia, la población ocupada de acuerdo con la ESI hace referencia al conjunto de personas
+para las que su empleo actual es el mismo que tenían en el mes de referencia y, por lo tanto, todos
+los perfiles que caracterizan al empleo se extienden al análisis de los ingresos laborales de este
+grupo de personas.
+Adicionalmente, la encuesta permite identificar a la población que tuvo el mes pasado un segundo
+empleo, o bien otro empleo distinto al que tenía en la semana de referencia de la encuesta
+(incluyendo a quienes no necesariamente hayan estado empleados en dicha semana, pero que sí
+trabajaron el mes previo), y que reportan información de ingresos laborales. Para este grupo de
+personas no es posible extender los perfiles de ocupación que se pudieran haber informado en el
+cuestionario central de la ENE21, ya que el único empleo que se caracteriza en la encuesta de empleo
+es el trabajo principal realizado en la semana de referencia.
+En síntesis, la información de ingresos de la ocupación de personas trabajadoras –dependientes e
+independientes– se refiere exclusivamente a aquellos cuyo empleo actual es el mismo que tenían
+en el mes de referencia.
+Por otro lado, se destaca que la ESI mide los ingresos de las personas ocupadas independientes de
+acuerdo con dos categorías ocupacionales:
+ 'Empleadores', que corresponde a aquellas personas que son propietarias de alguna
+empresa o negocio y que contratan a una o varias personas como asalariados a lo largo de
+un periodo continuo, que incluye el periodo de referencia (no se considera para este caso
+los familiares no remunerados).
+21 El ingreso de trabajos secundarios se captura en un ítem específico del módulo ESI. Es una pregunta global
+que incorpora tanto ingresos en dinero como especies.
+Página 29 de 96
+ 'Trabajadores por cuenta propia', que corresponde a aquellas personas que trabajan por
+su cuenta, constituyendo el segundo grupo más numeroso dentro de la población ocupada
+y, a diferencia de los empleadores, no contratan de manera continua a otras personas
+asalariadas para que trabajen con ellos.
+Para el caso de las personas ocupadas independientes, sean o no empleadoras, se busca separar los
+ingresos brutos de los gastos totales de manera que se obtenga, al igual que en el caso de las
+personas asalariadas, el ingreso neto percibido por la actividad realizada. Debido a que para las
+personas ocupadas independientes se mezclan los ingresos provenientes del capital y del trabajo,
+lo que se reporta en la encuesta es una combinación de utilidades y sueldos22, lo que se denomina
+en la literatura como ingreso 'mixto'23.
+4.6.2 Variables de información muestral.
+Además de las variables analíticas antes descritas, existe un set de variables de información muestral
+que se incluyen en las bases de datos. Estas variables son compartidas con la ENE, y corresponden
+a los datos que permiten identificar las características geográficas y del marco muestral utilizado en
+la encuesta.
+4.6.3 Variables de identificación de la persona
+Dentro de las variables requeridas para la identificación individual de miembros de un hogar, se
+construyen dos variables para poder identificar a las personas entrevistadas, estas son:
+ nro_linea: Corresponde al número de la línea con el cual la persona fue identificada en el
+cuestionario, o al orden correlativo que la persona toma dentro de la composición de un
+hogar.
+ idrph: Identificador único de personas. Esta variable permite identificar a las personas
+encuestadas de forma longitudinal."
