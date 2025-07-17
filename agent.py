@@ -11,8 +11,8 @@ from langchain.schema import BaseRetriever, Document
 from utils import get_retriever
 
 
-with open("data/info_schema.json", "r", encoding="utf-8") as f:
-    schema = json.load(f)
+with open("data/info_SCHEMA.json", "r", encoding="utf-8") as f:
+    SCHEMA = json.load(f)
 
 llm = ChatOpenAI(model="gpt-4o", temperature=0)
 retriever = get_retriever(vector_db_directory = "./esi_vectorstore")
@@ -20,8 +20,8 @@ retriever = get_retriever(vector_db_directory = "./esi_vectorstore")
 class MessagesState(MessagesState):
     question: str
     docs: list[Document]
-    answer: str
     sql_query: str
+    selected_variables: list
 
 
 def retrieve_node(state: MessagesState):
@@ -34,67 +34,66 @@ def retrieve_node(state: MessagesState):
         "docs": docs,
     }
 
-# Node: Generate answer from LLM
-def generate_node(state: MessagesState):
-    question = state["question"]
-    docs: list[Document] = state["docs"]
-
-    # Combine context and history
-    context = "\n\n".join(doc.page_content for doc in docs)
-
-    system_prompt = (
-        "Eres un experto en economía con acceso al documento metodológico de una importante encuesta sobre los ingresos de la población chilena, donde se explican en detalle las decisiones metodológicas detrás de las variables en la base de datos. "
-        "Responde la pregunta del usuario de manera clara, precisa y fundamentada, utilizando la información de las explicaciones metodológicas cuando sea pertinente."
-    )
-    
-    prompt = f"{system_prompt}\n\nUser: {question}\nContext: {context}\nAssistant:"    
-
-    # Generate answer
-    answer = llm.invoke(prompt).content
-
-    return {
-        "question": question,
-        "answer": answer,
-    }
 
 # Node: Generate SQL query from answer
 def generate_sql_node(state: MessagesState):
-    answer = state["answer"]
+    docs = state["docs"]
     question = state["question"]
+    selected_variables = state.get("selected_variables", [])
+
+    # Extract information about selected variables from SCHEMA
+    variables_context = []
+    for var in selected_variables:
+        var = var.strip()
+        if var in SCHEMA:
+            var_info = SCHEMA[var]
+            label = var_info.get("Etiqueta", "")
+            var_type = var_info.get("Tipo", "")
+            valores = var_info.get("valores", {})
+            codigo = valores.get("codigo", None)
+            descripcion_codigo = valores.get("nombre_codigo", None)
+            
+            var_desc = f"Nombre variable:{var} (Descripcion variable: {label}, Tipo: {var_type})"
+            if codigo:
+                var_desc += f", nombre codigo: {codigo} - descripcion codigo: {descripcion_codigo}"
+            variables_context.append(var_desc)
+    
+    variables_context_str = "\n".join(variables_context)
+
+    # Extract content from retrieved documents
+    docs_content = "\n".join([doc.page_content for doc in docs])
 
     system_prompt = (
         "Eres un experto en bases de datos y SQL. "
-        "Dada la siguiente respuesta a una pregunta sobre una base de datos de encuestas, "
-        "genera una consulta SQL que permita obtener la información solicitada. "
-        "Si la respuesta no es suficiente para generar una consulta SQL, responde solo con 'NO_SQL'."
+        "Dada la siguiente información relevante sobre una base de datos de encuestas, "
+        "genera una consulta SQL que permita obtener la información solicitada en la pregunta. "
+        "Si la información no es suficiente para generar una consulta SQL, responde solo con 'NO_SQL'."
+        "Solo puedes usar las variables proveídas como parte de tu respuesta."
+        f"\n\nVariables relevantes seleccionadas:\n{variables_context_str}"
+        f"\n\nInformación relevante:\n{docs_content}"
     )
-    prompt = f"{system_prompt}\n\nPregunta: {question}\nRespuesta: {answer}\nSQL:"
+    prompt = f"{system_prompt}\n\nPregunta: {question}\nSQL:"
+
+    print("SQL generation prompt:")
+    print(prompt)
 
     sql_query = llm.invoke(prompt).content.strip()
 
     return {
         "question": question,
-        "answer": answer,
+        "docs": docs,
         "sql_query": sql_query,
     }
-
-
-
-def make_variable_selection_prompt(user_question: str, schema: dict) -> str:
+def variable_selection_node(state: MessagesState):
     """
-    Generate a prompt for an LLM to select the 10 most relevant variables from a schema
+    Generate a prompt for an LLM to select the 10 most relevant variables from a SCHEMA
     based on a user question. The selected variables will be used for a SQL query.
-
-    Args:
-        user_question (str): The user's question about the data.
-        schema (dict): The schema describing the columns/variables in the table.
-
     Returns:
         str: The prompt to send to the LLM.
     """
-    # Format the schema as a readable list of variables with their descriptions, including nombre_codigo
+    # Format the SCHEMA as a readable list of variables with their descriptions, including nombre_codigo
     variable_descriptions = []
-    for var, info in schema.items():
+    for var, info in SCHEMA.items():
         label = info.get("Etiqueta", "")
         var_type = info.get("Tipo", "")
         valores = info.get("valores", {})
@@ -119,23 +118,24 @@ def make_variable_selection_prompt(user_question: str, schema: dict) -> str:
         "Dada la siguiente pregunta del usuario, selecciona los 10 nombres de variables que sean más relevantes para responder la pregunta. "
         "Devuelve únicamente una lista de los nombres de las variables, separadas por comas, sin explicaciones adicionales.\n\n"
         f"Esquema de la tabla:\n{schema_str}\n\n"
-        f"Pregunta del usuario: {user_question}\n\n"
+        f"Pregunta del usuario: {state["question"]}\n\n"
         "Variables relevantes:"
     )
-    return prompt
 
-
+    selected_variables = llm.invoke(prompt).content.split(",")
+    
+    return {"selected_variables": selected_variables}
 
 
 
 def get_graph():
     graph = StateGraph(MessagesState)
     graph.add_node("retrieve", RunnableLambda(retrieve_node))
-    graph.add_node("generate", RunnableLambda(generate_node))
-    graph.add_node("generate_sql", RunnableLambda(generate_sql_node))  # Nuevo nodo agregado
-    graph.add_edge(START, "retrieve")
-    graph.add_edge("retrieve", "generate")
-    graph.add_edge("generate", "generate_sql")  # Nueva transición al nuevo nodo
-    graph.add_edge("generate_sql", END)         # El flujo termina en el nuevo nodo
+    graph.add_node("variable_selection", RunnableLambda(variable_selection_node))
+    graph.add_node("generate_sql", RunnableLambda(generate_sql_node))
 
+    graph.add_edge(START, "retrieve")
+    graph.add_edge("retrieve", "variable_selection")
+    graph.add_edge("variable_selection", "generate_sql")
+    graph.add_edge("generate_sql", END)
     return graph.compile()
