@@ -53,7 +53,7 @@ def generate_sql_node(state: MessagesState):
             codigo = valores.get("codigo", None)
             descripcion_codigo = valores.get("nombre_codigo", None)
             
-            var_desc = f"Nombre variable:{var} (Descripcion variable: {label}, Tipo: {var_type})"
+            var_desc = f"Nombre variable: {var} (Descripcion variable: {label}, Tipo: {var_type})"
             if codigo:
                 var_desc += f", nombre codigo: {codigo} - descripcion codigo: {descripcion_codigo}"
             variables_context.append(var_desc)
@@ -65,12 +65,14 @@ def generate_sql_node(state: MessagesState):
 
     system_prompt = (
         "Eres un experto en bases de datos y SQL. "
-        "Dada la siguiente información relevante sobre una base de datos de encuestas, "
-        "genera una consulta SQL que permita obtener la información solicitada en la pregunta. "
+        "Tienes información relevante extraída de el documento metodologico de la generacion de la encuesta."
+        "Tambien tienes acceso al schema de datos de algunas variables relevantes seleccionadas para tí."
+        "genera una consulta SQL que permita obtener la información para responder a la pregunta del usuario. "
         "Si la información no es suficiente para generar una consulta SQL, responde solo con 'NO_SQL'."
-        "Solo puedes usar las variables proveídas como parte de tu respuesta."
+        "Solo puedes usar las variables {selected_variables} como parte de tu respuesta."
         f"\n\nVariables relevantes seleccionadas:\n{variables_context_str}"
         f"\n\nInformación relevante:\n{docs_content}"
+        " Si hay varias formas de obtener la misma información, selecciona la forma mas sencilla."
     )
     prompt = f"{system_prompt}\n\nPregunta: {question}\nSQL:"
 
