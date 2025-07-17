@@ -1,4 +1,6 @@
 import json
+import pandas as pd
+import duckdb
 
 from langgraph.graph import START, END, StateGraph, MessagesState
 from langchain_core.messages import AnyMessage
@@ -14,6 +16,10 @@ from utils import get_retriever
 with open("data/info_SCHEMA.json", "r", encoding="utf-8") as f:
     SCHEMA = json.load(f)
 
+ESI_DATA_FILE_PATH = 'data/esi-2023---personas.csv'
+ESI_DF = pd.read_csv(ESI_DATA_FILE_PATH)
+SQL_FACTTABLE_NAME = 'data'
+
 llm = ChatOpenAI(model="gpt-4o", temperature=0)
 retriever = get_retriever(vector_db_directory = "./esi_vectorstore")
 
@@ -22,6 +28,10 @@ class MessagesState(MessagesState):
     docs: list[Document]
     sql_query: str
     selected_variables: list
+    extracted_data: pd.DataFrame
+    summary_statistics: any
+    summary_code: str
+
 
 
 def retrieve_node(state: MessagesState):
@@ -70,14 +80,13 @@ def generate_sql_node(state: MessagesState):
         "genera una consulta SQL que permita obtener la información para responder a la pregunta del usuario. "
         "Si la información no es suficiente para generar una consulta SQL, responde solo con 'NO_SQL'."
         "Solo puedes usar las variables {selected_variables} como parte de tu respuesta."
+        "Si hay varias formas de obtener la misma información, selecciona la forma mas sencilla."
+        f"El nombre de la tabla es '{SQL_FACTTABLE_NAME}'."
         f"\n\nVariables relevantes seleccionadas:\n{variables_context_str}"
         f"\n\nInformación relevante:\n{docs_content}"
-        " Si hay varias formas de obtener la misma información, selecciona la forma mas sencilla."
+        
     )
     prompt = f"{system_prompt}\n\nPregunta: {question}\nSQL:"
-
-    print("SQL generation prompt:")
-    print(prompt)
 
     sql_query = llm.invoke(prompt).content.strip()
 
@@ -125,8 +134,64 @@ def variable_selection_node(state: MessagesState):
     )
 
     selected_variables = llm.invoke(prompt).content.split(",")
+    selected_variables = [var.strip() for var in selected_variables]
     
     return {"selected_variables": selected_variables}
+
+def lookup_data_node(state: MessagesState):
+    """Implementation of sales data lookup from parquet file using SQL"""
+    try:
+
+        duckdb.sql(f"CREATE TABLE IF NOT EXISTS {SQL_FACTTABLE_NAME} AS SELECT * FROM ESI_DF")
+
+        sql_query = state["sql_query"].strip()
+        sql_query = sql_query.replace("```sql", "").replace("```", "")
+        
+        result = duckdb.sql(sql_query).df()
+        return {"extracted_data": result}
+
+    except Exception as e:
+        print(f"An Exception error occurred: {str(e)}")
+        print("An empty DataFrame is returned")
+        return {"extracted_data": pd.DataFrame()}
+
+
+def execute_code_node(state: MessagesState):
+    question = state["question"]
+    df = state["extracted_data"]
+    selected_variables = state["selected_variables"]
+
+    system_prompt = f"""
+    Eres un experto en análisis de datos con pandas. Genera código Python que cree estadísticas 
+    resumidas basadas en la pregunta del usuario y el DataFrame proporcionado. El código debe:
+    1. Usar el DataFrame 'df' que ya está disponible
+    2. Crear estadísticas descriptivas relevantes (como media, mediana, moda, etc.)
+    3. Generar visualizaciones si es apropiado (usando matplotlib o seaborn)
+    4. Devolver resultados claros y concisos que respondan a la pregunta
+    5. Solo se pueden usar las variables {selected_variables} en el análisis.
+    
+    Solo devuelve el código Python, sin explicaciones adicionales.
+    """
+
+    prompt = f"{system_prompt}\n\nPregunta del usuario: {question}\n\nDataFrame disponible:\n{df.head(3)}\n\nCódigo Python:"
+    
+    summary_code = llm.invoke(prompt).content.strip()
+    summary_code = summary_code.replace("```python", "").replace("```", "")
+    summary_code = summary_code.strip()
+    print(f"summary_code is {summary_code}")
+    
+    # Execute the generated code to produce summary statistics
+    try:
+        local_vars = {"df": df}
+        exec(summary_code, globals(), local_vars)
+        summary_result = local_vars.get("result", "No se generaron resultados.")
+    except Exception as e:
+        summary_result = f"Error al ejecutar el código: {str(e)}"
+    
+    return {
+        "summary_statistics": summary_result,
+        "summary_code": summary_code
+    }
 
 
 
@@ -135,9 +200,14 @@ def get_graph():
     graph.add_node("retrieve", RunnableLambda(retrieve_node))
     graph.add_node("variable_selection", RunnableLambda(variable_selection_node))
     graph.add_node("generate_sql", RunnableLambda(generate_sql_node))
+    graph.add_node("lookup_data", RunnableLambda(lookup_data_node))
+    graph.add_node("execute_code", RunnableLambda(execute_code_node))
+
 
     graph.add_edge(START, "retrieve")
     graph.add_edge("retrieve", "variable_selection")
     graph.add_edge("variable_selection", "generate_sql")
-    graph.add_edge("generate_sql", END)
+    graph.add_edge("generate_sql", "lookup_data")
+    graph.add_edge("lookup_data", "execute_code")    
+    graph.add_edge("execute_code", END)
     return graph.compile()
