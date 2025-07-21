@@ -13,7 +13,7 @@ def test_ingreso_promedio(sql_query):
     OCUP_DF = ESI_DF.query('ocup_ref == 1')
     esi_average_income = (OCUP_DF['ing_t_p'] * OCUP_DF['fact_cal_esi']).sum() / OCUP_DF['fact_cal_esi'].sum()
     
-assert abs(agent_average_income - esi_average_income) <= 0.01 * esi_average_income
+    assert abs(agent_average_income - esi_average_income) <= 0.01 * esi_average_income
 
 
 def test_ingreso_promedio_mujeres(sql_query):
@@ -24,7 +24,7 @@ def test_ingreso_promedio_mujeres(sql_query):
     OCUP_DF = ESI_DF.query('ocup_ref == 1 and sexo == 2')
     esi_average_income_women = (OCUP_DF['ing_t_p'] * OCUP_DF['fact_cal_esi']).sum() / OCUP_DF['fact_cal_esi'].sum()
     
-assert abs(agent_average_income_women - esi_average_income_women) <= 0.01 * esi_average_income_women
+    assert abs(agent_average_income_women - esi_average_income_women) <= 0.01 * esi_average_income_women
 
 
 def test_ingreso_mediano(sql_query):
@@ -40,7 +40,7 @@ def test_ingreso_mediano(sql_query):
     median_position = df_sorted[df_sorted['cum_weights_norm'] >= 0.5].iloc[0]
     esi_median_income = median_position['ing_t_p']
     
-assert abs(agent_median_income - esi_median_income) <= 0.01 * esi_median_income
+    assert abs(agent_median_income - esi_median_income) <= 0.01 * esi_median_income
 
 
 def test_ingreso_p95(sql_query):
@@ -56,8 +56,22 @@ def test_ingreso_p95(sql_query):
     p95_position = df_sorted[df_sorted['cum_weights_norm'] >= 0.95].iloc[0]
     esi_median_income = p95_position['ing_t_p']
     
-assert abs(agent_median_income - esi_median_income) <= 0.01 * esi_median_income
+    assert abs(agent_median_income - esi_median_income) <= 0.01 * esi_median_income
 
 
 def test_brecha_de_genero():
-    pass
+    def weighted_mean(DF):
+        return (DF['ing_t_p'] * DF['fact_cal_esi']).sum() / DF['fact_cal_esi'].sum()
+
+    MAN_DF = ESI_DF.query('ocup_ref == 1 and sexo == 1')
+    WOMAN_DF = ESI_DF.query('ocup_ref == 1 and sexo == 2')
+
+    men_mean_income = weighted_mean(MAN_DF)
+    women_mean_income = weighted_mean(WOMAN_DF)
+
+    brecha_de_genero_esi = (women_mean_income - men_mean_income) / men_mean_income
+
+    brecha_de_genero_agent = duckdb.sql(sql_query).df()
+
+    assert abs(brecha_de_genero_agent - brecha_de_genero_esi) <= 0.01 * brecha_de_genero_esi
+

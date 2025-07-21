@@ -18,7 +18,7 @@ with open("data/info_SCHEMA.json", "r", encoding="utf-8") as f:
 
 ESI_DATA_FILE_PATH = 'data/esi-2023---personas.csv'
 ESI_DF = pd.read_csv(ESI_DATA_FILE_PATH)
-SQL_FACTTABLE_NAME = 'data'
+
 
 llm = ChatOpenAI(model="gpt-4o", temperature=0)
 retriever = get_retriever(vector_db_directory = "./esi_vectorstore")
@@ -81,7 +81,7 @@ def generate_sql_node(state: MessagesState):
         "Si la información no es suficiente para generar una consulta SQL, responde solo con 'NO_SQL'."
         "Solo puedes usar las variables {selected_variables} como parte de tu respuesta."
         "Si hay varias formas de obtener la misma información, selecciona la forma mas sencilla."
-        f"El nombre de la tabla es '{SQL_FACTTABLE_NAME}'."
+        f"El nombre de la tabla es 'ESI'."
         f"\n\nVariables relevantes seleccionadas:\n{variables_context_str}"
         f"\n\nInformación relevante:\n{docs_content}"
         
@@ -142,7 +142,7 @@ def lookup_data_node(state: MessagesState):
     """Implementation of sales data lookup from parquet file using SQL"""
     try:
 
-        duckdb.sql(f"CREATE TABLE IF NOT EXISTS {SQL_FACTTABLE_NAME} AS SELECT * FROM ESI_DF")
+        duckdb.sql(f"CREATE TABLE IF NOT EXISTS ESI AS SELECT * FROM ESI_DF")
 
         sql_query = state["sql_query"].strip()
         sql_query = sql_query.replace("```sql", "").replace("```", "")
@@ -168,7 +168,8 @@ def execute_code_node(state: MessagesState):
     2. Crear estadísticas descriptivas relevantes (como media, mediana, moda, etc.)
     3. Generar visualizaciones si es apropiado (usando matplotlib o seaborn)
     4. Devolver resultados claros y concisos que respondan a la pregunta
-    5. Solo se pueden usar las variables {selected_variables} en el análisis.
+    5. No generar estadisticas o visualizacion que no sean relevantes para la pregunta.
+    6. Solo se pueden usar las variables {selected_variables} en el análisis.
     
     Solo devuelve el código Python, sin explicaciones adicionales.
     """
