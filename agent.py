@@ -35,8 +35,11 @@ class MessagesState(MessagesState):
 
 
 def retrieve_node(state: MessagesState):
-    RETRIEVER_PROMPT = "responde a la siguiente pregunta devolviendo todo el contexto relevante y mencionando las variables estadisticas relevantes mecionadas en la pregunta. {question}"
     question = state["messages"][-1].content
+    RETRIEVER_PROMPT = f"""responde a la siguiente pregunta devolviendo todo el contexto relevante y mencionando las variables estadisticas relevantes mecionadas en la pregunta del usuario.
+    Si la pregunta del usuario es muy generica, tambíen devuelve contexto que pueda ayudar a responder de manera mas específica la pregunta de acuerdo a las mejores práticas descritas en el documento.
+    Pregunta del usuario: {question}
+    """
 
     docs = retriever.get_relevant_documents(RETRIEVER_PROMPT.format(question=question))
     return {
@@ -139,7 +142,7 @@ def variable_selection_node(state: MessagesState):
     return {"selected_variables": selected_variables}
 
 def lookup_data_node(state: MessagesState):
-    """Implementation of sales data lookup from parquet file using SQL"""
+    """Implementation of sales data lookup from Dataframe file using SQL"""
     try:
 
         duckdb.sql(f"CREATE TABLE IF NOT EXISTS ESI AS SELECT * FROM ESI_DF")
@@ -162,14 +165,12 @@ def execute_code_node(state: MessagesState):
     selected_variables = state["selected_variables"]
 
     system_prompt = f"""
-    Eres un experto en análisis de datos con pandas. Genera código Python que cree estadísticas 
-    resumidas basadas en la pregunta del usuario y el DataFrame proporcionado. El código debe:
+    Eres un experto en análisis de datos con pandas. Genera código Python que cree las estadísticas
+    solicitadas en la pregunta del usuario y el DataFrame proporcionado. El código debe:
     1. Usar el DataFrame 'df' que ya está disponible
-    2. Crear estadísticas descriptivas relevantes (como media, mediana, moda, etc.)
-    3. Generar visualizaciones si es apropiado (usando matplotlib o seaborn)
-    4. Devolver resultados claros y concisos que respondan a la pregunta
-    5. No generar estadisticas o visualizacion que no sean relevantes para la pregunta.
-    6. Solo se pueden usar las variables {selected_variables} en el análisis.
+    2. Crear la estadísticas solicitadas en la pregunta del usuario
+    3. No generar estadisticas que no sean relevantes para la pregunta.
+    4. Solo se pueden usar las variables {selected_variables} en el análisis.
     
     Solo devuelve el código Python, sin explicaciones adicionales.
     """
